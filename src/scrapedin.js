@@ -4,7 +4,7 @@ const profile = require('./profile/profile')
 const company = require('./company/company')
 const logger = require('./logger')(__filename)
 
-module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToGetContactInfo, puppeteerArgs, puppeteerAuthenticate, endpoint, profilePageLoadTimeout} = { isHeadless: true, hasToLog: false, profilePageLoadTimeout: 5000 }) => {
+module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToGetContactInfo, puppeteerArgs, puppeteerAuthenticate, endpoint, profilePageLoadTimeout, gmailVerificationCodeParser} = { isHeadless: true, hasToLog: false, profilePageLoadTimeout: 5000 }) => {
   if (!hasToLog) {
     logger.stopLogging()
   }
@@ -26,7 +26,7 @@ module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToG
     logger.info(`email (${email}) and password was provided, we're going to login...`)
 
     try {
-      await login(browser, email, password, puppeteerAuthenticate)
+      await login(browser, email, password, puppeteerAuthenticate, gmailVerificationCodeParser)
     } catch (e) {
       if(!endpoint){
         await browser.close()
