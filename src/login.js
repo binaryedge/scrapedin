@@ -35,6 +35,8 @@ module.exports = async (browser, email, password, puppeteerAuthenticate, gmailVe
 
         if (verification_submit) {
           if (gmailVerificationCodeParser) {
+            logger.info("Doing email pin verification...")
+
             const pin = await gmailVerificationCodeParser({logger})
 
             await email_verification_input.type(pin)
