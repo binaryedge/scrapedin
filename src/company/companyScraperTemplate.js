@@ -23,6 +23,26 @@ const template = {
                 isMultipleFields: true
             }
         }
+    },
+    people: {
+        selector: "li.org-people-profiles-module__profile-item",
+        fields: {
+            full_name: "div.org-people-profile-card__profile-title",
+            profile_path: {
+                selector: "a[data-control-name=people_profile_card_image_link]",
+                attribute: 'href'
+            }
+        }
+    },
+    people_list: {
+        selector: "li.search-result__occluded-item",
+        fields: {
+            full_name: "span.name.actor-name",
+            profile_path: {
+                selector: "a[data-control-name=search_srp_result]",
+                attribute: 'href'
+            }
+        }
     }
 }
 

@@ -4,7 +4,7 @@ const profile = require('./profile/profile')
 const company = require('./company/company')
 const logger = require('./logger')(__filename)
 
-module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToGetContactInfo, puppeteerArgs, puppeteerAuthenticate, endpoint } = { isHeadless: true, hasToLog: false }) => {
+module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToGetContactInfo, puppeteerArgs, puppeteerAuthenticate, endpoint, profilePageLoadTimeout} = { isHeadless: true, hasToLog: false, profilePageLoadTimeout: 5000 }) => {
   if (!hasToLog) {
     logger.stopLogging()
   }
@@ -23,10 +23,10 @@ module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToG
   if (cookies) {
     logger.info('using cookies, login will be bypassed')
   } else if (email && password) {
-    logger.info('email and password was provided, we\'re going to login...')
+    logger.info(`email (${email}) and password was provided, we're going to login...`)
 
     try {
-      await login(browser, email, password, logger)
+      await login(browser, email, password, puppeteerAuthenticate)
     } catch (e) {
       if(!endpoint){
         await browser.close()
@@ -37,5 +37,5 @@ module.exports = async ({ cookies, email, password, isHeadless, hasToLog, hasToG
     logger.warn('email/password and cookies wasn\'t provided, only public data will be collected')
   }
 
-  return (url, waitMs) => url.includes('/school/') || url.includes('/company/') ? company(browser, cookies, url, waitMs, hasToGetContactInfo, puppeteerAuthenticate) :profile(browser, cookies, url, waitMs, hasToGetContactInfo, puppeteerAuthenticate)
+  return (url, waitMs) => url.includes('/school/') || url.includes('/company/') ? company(browser, cookies, url, waitMs, hasToGetContactInfo, puppeteerAuthenticate) :profile(browser, cookies, url, waitMs, hasToGetContactInfo, puppeteerAuthenticate, profilePageLoadTimeout)
 }

@@ -2,9 +2,9 @@ const openPage = require('./openPage')
 const logger = require('./logger')(__filename)
 const pkg = require('./package')
 
-module.exports = async (browser, email, password) => {
+module.exports = async (browser, email, password, puppeteerAuthenticate) => {
   const url = 'https://www.linkedin.com/login'
-  const page = await openPage({ browser, url })
+  const page = await openPage({ browser, url, puppeteerAuthenticate })
   logger.info(`logging at: ${url}`)
 
   await page.goto(url)

@@ -1,8 +1,8 @@
 const logger = require('../logger')(__filename)
 
 module.exports = async (page) => {
-  const MAX_TIMES_TO_SCROLL = 25
-  const TIMEOUT_BETWEEN_SCROLLS = 500
+  const MAX_TIMES_TO_SCROLL = 100
+  const TIMEOUT_BETWEEN_SCROLLS = 200
   const PAGE_BOTTOM_SELECTOR_STRING = '#expanded-footer'
 
   for (let i = 0; i < MAX_TIMES_TO_SCROLL; i++) {
